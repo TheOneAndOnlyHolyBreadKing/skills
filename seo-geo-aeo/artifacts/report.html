@@ -1,0 +1,1424 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO / GEO / AEO Search Intelligence Report — Apex Digital Solutions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Dark Theme Variables */
+            --bg-gradient: radial-gradient(circle at 50% 50%, #0a1128 0%, #030712 100%);
+            --bg-pattern: rgba(99, 102, 241, 0.02);
+            --glass-bg: rgba(17, 24, 39, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0px rgba(255, 255, 255, 0.1);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --card-bg: rgba(15, 23, 42, 0.5);
+            --glow-color: rgba(99, 102, 241, 0.15);
+            --nav-bg: rgba(3, 7, 18, 0.85);
+
+            /* Accent Colors */
+            --accent-seo: #06b6d4; /* Neon Cyan */
+            --accent-geo: #d946ef; /* Neon Purple/Pink */
+            --accent-aeo: #10b981; /* Neon Emerald */
+            --accent-blue: #3b82f6;
+
+            /* Status Colors */
+            --status-good: #10b981;
+            --status-good-bg: rgba(16, 185, 129, 0.12);
+            --status-good-border: rgba(16, 185, 129, 0.3);
+            --status-attention: #f59e0b;
+            --status-attention-bg: rgba(245, 158, 11, 0.12);
+            --status-attention-border: rgba(245, 158, 11, 0.3);
+            --status-missing: #f43f5e;
+            --status-missing-bg: rgba(244, 63, 94, 0.12);
+            --status-missing-border: rgba(244, 63, 94, 0.3);
+
+            --accent-critical: #f43f5e;
+            --accent-high: #f97316;
+            --accent-medium: #eab308;
+            --accent-quickwin: #10b981;
+        }
+
+        [data-theme="light"] {
+            /* Light Theme Variables */
+            --bg-gradient: radial-gradient(circle at 50% 50%, #f8fafc 0%, #cbd5e1 100%);
+            --bg-pattern: rgba(99, 102, 241, 0.04);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(15, 23, 42, 0.08);
+            --glass-shadow: 0 20px 40px rgba(15, 23, 42, 0.05), inset 0 1px 0px rgba(255, 255, 255, 0.8);
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border-color: rgba(15, 23, 42, 0.08);
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --glow-color: rgba(99, 102, 241, 0.06);
+            --nav-bg: rgba(248, 250, 252, 0.85);
+
+            /* Accents */
+            --accent-seo: #0891b2;
+            --accent-geo: #a855f7;
+            --accent-aeo: #059669;
+            --accent-blue: #2563eb;
+
+            /* Statuses */
+            --status-good-bg: rgba(5, 150, 105, 0.1);
+            --status-good-border: rgba(5, 150, 105, 0.25);
+            --status-attention-bg: rgba(217, 119, 6, 0.1);
+            --status-attention-border: rgba(217, 119, 6, 0.25);
+            --status-missing-bg: rgba(220, 38, 38, 0.1);
+            --status-missing-border: rgba(220, 38, 38, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(var(--bg-pattern) 1px, transparent 1px);
+            background-size: 24px 24px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 24px 60px 24px;
+        }
+
+        /* Nav Header styles */
+        header.dashboard-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 70px;
+            background: var(--nav-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.03);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.4rem;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--accent-seo) 0%, var(--accent-geo) 50%, var(--accent-aeo) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-seo) 0%, var(--accent-geo) 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Toggle Button styling */
+        .theme-toggle-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        .theme-toggle-btn:hover {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .theme-toggle-icon {
+            font-size: 1.1rem;
+        }
+
+        /* Cover and Hero section styling */
+        .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: var(--glass-shadow);
+            margin-bottom: 30px;
+            position: relative;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .hero-banner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.1) 0%, transparent 60%), var(--glass-bg);
+            border-color: rgba(99, 102, 241, 0.15);
+        }
+
+        .hero-content h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 0 0 10px 0;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+        }
+
+        .hero-content p.subtitle {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            margin: 0 0 25px 0;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .hero-badge {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--glass-border);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-badge-primary {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(147, 51, 234, 0.15) 100%);
+            border-color: rgba(99, 102, 241, 0.3);
+            color: #93c5fd;
+        }
+
+        /* Overall Stats Ribbon */
+        .stats-ribbon {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .stat-item {
+            text-align: left;
+        }
+
+        .stat-val {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Score cards & animated progress rings */
+        .score-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 900px) {
+            .score-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .score-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 35px 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .score-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 4px;
+        }
+
+        .score-card.seo-card::after { background: var(--accent-seo); }
+        .score-card.geo-card::after { background: var(--accent-geo); }
+        .score-card.aeo-card::after { background: var(--accent-aeo); }
+
+        .score-card h3 {
+            margin: 0 0 20px 0;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .gauge-wrapper {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .gauge-circle-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.03);
+            [data-theme="light"] & { stroke: rgba(0, 0, 0, 0.04); }
+            stroke-width: 10;
+        }
+
+        .gauge-circle {
+            fill: none;
+            stroke-width: 10;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            stroke-dasharray: 282.7; /* 2 * PI * 45 */
+            stroke-dashoffset: 282.7;
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .seo-gauge { stroke: var(--accent-seo); filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.4)); }
+        .geo-gauge { stroke: var(--accent-geo); filter: drop-shadow(0 0 6px rgba(217, 70, 239, 0.4)); }
+        .aeo-gauge { stroke: var(--accent-aeo); filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.4)); }
+
+        .gauge-text {
+            position: absolute;
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1;
+        }
+
+        .gauge-subtext {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .score-card-status {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            padding: 6px 16px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-badge-strong { background: var(--status-good-bg); border: 1px solid var(--status-good-border); color: var(--status-good); }
+        .status-badge-ontrack { background: var(--status-attention-bg); border: 1px solid var(--status-attention-border); color: var(--status-attention); }
+        .status-badge-needswork { background: var(--status-missing-bg); border: 1px solid var(--status-missing-border); color: var(--status-missing); }
+
+        /* Executive Summary Panel */
+        .summary-panel {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, transparent 100%), var(--glass-bg);
+            border-left: 5px solid var(--accent-blue);
+        }
+
+        .summary-panel h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 0 0 15px 0;
+            color: var(--accent-blue);
+        }
+
+        .summary-panel p {
+            margin: 0;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        /* Section titles */
+        h2.section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 50px 0 20px 0;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        h2.section-title::after {
+            content: '';
+            flex-grow: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        /* Live Checklist Progress */
+        .checklist-tracker-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.04) 0%, transparent 100%), var(--glass-bg);
+            border-color: rgba(16, 185, 129, 0.15);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .tracker-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .tracker-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tracker-stats {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--status-good);
+        }
+
+        .tracker-bar-bg {
+            background: rgba(255, 255, 255, 0.03);
+            [data-theme="light"] & { background: rgba(0, 0, 0, 0.05); }
+            height: 10px;
+            border-radius: 50px;
+            overflow: hidden;
+            width: 100%;
+            border: 1px solid var(--glass-border);
+        }
+
+        .tracker-bar-fill {
+            background: linear-gradient(90deg, var(--accent-blue) 0%, var(--accent-aeo) 100%);
+            height: 100%;
+            width: 0%;
+            border-radius: 50px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Beautiful interactive tables */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            margin-bottom: 40px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.02);
+            [data-theme="light"] & { background: rgba(0, 0, 0, 0.02); }
+            padding: 18px 24px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        td {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.95rem;
+            vertical-align: middle;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.015);
+            [data-theme="light"] & { background: rgba(0, 0, 0, 0.01); }
+        }
+
+        /* Checkbox elements for Priority recommendations */
+        .recommendation-row {
+            transition: opacity 0.3s ease, text-decoration 0.3s ease;
+        }
+
+        .recommendation-row.completed-row {
+            opacity: 0.5;
+        }
+
+        .recommendation-row.completed-row td {
+            text-decoration: line-through;
+        }
+
+        .recommendation-row.completed-row td.no-strike {
+            text-decoration: none !important;
+        }
+
+        .custom-checkbox {
+            position: relative;
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+        }
+
+        .custom-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0; width: 0;
+        }
+
+        .checkbox-checkmark {
+            position: absolute;
+            top: 0; left: 0;
+            height: 22px; width: 22px;
+            background-color: rgba(255,255,255,0.03);
+            [data-theme="light"] & { background-color: rgba(0, 0, 0, 0.03); }
+            border: 2px solid var(--glass-border);
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .custom-checkbox:hover input ~ .checkbox-checkmark {
+            border-color: var(--accent-blue);
+        }
+
+        .custom-checkbox input:checked ~ .checkbox-checkmark {
+            background-color: var(--accent-aeo);
+            border-color: var(--accent-aeo);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+        }
+
+        .checkbox-checkmark::after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .custom-checkbox input:checked ~ .checkbox-checkmark::after {
+            display: block;
+        }
+
+        .custom-checkbox .checkbox-checkmark::after {
+            left: 7px;
+            top: 3px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        /* Priority Matrix Badges */
+        .priority-badge {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 5px 12px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .p-badge-critical { background: rgba(244, 63, 94, 0.15); border: 1px solid rgba(244, 63, 94, 0.3); color: var(--accent-critical); }
+        .p-badge-high { background: rgba(249, 115, 22, 0.15); border: 1px solid rgba(249, 115, 22, 0.3); color: var(--accent-high); }
+        .p-badge-medium { background: rgba(234, 179, 8, 0.15); border: 1px solid rgba(234, 179, 8, 0.3); color: var(--accent-medium); }
+        .p-badge-quickwin { background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: var(--accent-quickwin); }
+
+        /* Finding breakdown layout & tab controls */
+        .filter-tabs-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filter-tabs {
+            display: flex;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 4px;
+            border-radius: 50px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        .filter-tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 8px 20px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .filter-tab-btn.active {
+            background: var(--accent-blue);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .filter-tab-btn:hover:not(.active) {
+            color: var(--text-main);
+        }
+
+        /* Custom statuses */
+        .status-pill {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 5px 12px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+        }
+
+        .status-pill.good { background: var(--status-good-bg); border: 1px solid var(--status-good-border); color: var(--status-good); }
+        .status-pill.needsattention { background: var(--status-attention-bg); border: 1px solid var(--status-attention-border); color: var(--status-attention); }
+        .status-pill.missing { background: var(--status-missing-bg); border: 1px solid var(--status-missing-border); color: var(--status-missing); }
+
+        /* Strengths Section Grid */
+        .strengths-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .strength-glass-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, transparent 100%), var(--glass-bg);
+            border-color: rgba(16, 185, 129, 0.15);
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+        }
+
+        .strength-glass-card h4 {
+            margin: 0 0 10px 0;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--status-good);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .strength-glass-card p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .table-row-hidden {
+            display: none !important;
+        }
+
+        /* Printable Style Sheet */
+        @media print {
+            body {
+                background: #ffffff !important;
+                color: #0f172a !important;
+                padding: 0 !important;
+                font-size: 10pt !important;
+            }
+
+            body::before {
+                display: none !important;
+            }
+
+            .container {
+                padding: 20px !important;
+                max-width: 100% !important;
+            }
+
+            header.dashboard-nav,
+            .theme-toggle-btn,
+            .filter-tabs-container,
+            .custom-checkbox input,
+            .custom-checkbox .checkbox-checkmark::after {
+                display: none !important;
+            }
+
+            .glass-card, .table-responsive, .strength-glass-card {
+                background: #ffffff !important;
+                border: 1px solid #cbd5e1 !important;
+                box-shadow: none !important;
+                color: #0f172a !important;
+                padding: 25px !important;
+                margin-bottom: 20px !important;
+                page-break-inside: avoid;
+            }
+
+            .strength-glass-card {
+                border-color: #cbd5e1 !important;
+            }
+
+            .hero-banner {
+                page-break-after: always;
+                height: 98vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                border: none !important;
+            }
+
+            .hero-content h1 {
+                font-size: 3.5rem !important;
+                color: #0f172a !important;
+            }
+
+            .summary-panel {
+                border-left: 5px solid #2563eb !important;
+                page-break-after: always;
+            }
+
+            .score-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 15px !important;
+                page-break-after: always;
+                margin-top: 50px !important;
+            }
+
+            .score-card {
+                border: 1px solid #cbd5e1 !important;
+            }
+
+            .gauge-circle-bg {
+                stroke: #e2e8f0 !important;
+            }
+
+            .seo-gauge { stroke: #0891b2 !important; }
+            .geo-gauge { stroke: #a855f7 !important; }
+            .aeo-gauge { stroke: #059669 !important; }
+
+            .gauge-text {
+                color: #0f172a !important;
+            }
+
+            .gauge-circle {
+                stroke-dashoffset: 0 !important; /* Force complete stroke visibility in print */
+            }
+
+            h2.section-title {
+                font-size: 1.8rem !important;
+                color: #0f172a !important;
+                margin-top: 40px !important;
+                page-break-before: always;
+            }
+
+            table {
+                width: 100% !important;
+                color: #0f172a !important;
+            }
+
+            th {
+                background: #f1f5f9 !important;
+                color: #0f172a !important;
+                border-bottom: 2px solid #cbd5e1 !important;
+            }
+
+            td {
+                border-bottom: 1px solid #cbd5e1 !important;
+            }
+
+            tr:nth-child(even) td {
+                background: #f8fafc !important;
+            }
+
+            .priority-badge, .status-pill, .score-card-status {
+                border: 1px solid #cbd5e1 !important;
+                background: #f1f5f9 !important;
+                color: #0f172a !important;
+            }
+
+            .custom-checkbox {
+                border: 1px solid #0f172a !important;
+                background: #ffffff !important;
+            }
+
+            /* Custom print pages controls */
+            #print-recs-page {
+                page-break-after: always;
+            }
+
+            #print-seo-page {
+                page-break-after: always;
+            }
+
+            #print-geo-aeo-page {
+                page-break-after: always;
+            }
+            
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- DASHBOARD STICKY NAVBAR -->
+    <header class="dashboard-nav">
+        <div class="nav-brand">
+            <div class="nav-logo-icon">▲</div>
+            <span>SEARCH INTELLIGENCE</span>
+        </div>
+        <div class="nav-controls">
+            <button class="theme-toggle-btn" onclick="toggleTheme()">
+                <span class="theme-toggle-icon" id="theme-btn-icon">☀️</span>
+                <span id="theme-btn-text">Light Mode</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- HERO EXECUTIVE SUMMARY COVER -->
+        <div class="glass-card hero-banner">
+            <div class="hero-content">
+                <h1>Apex Digital Solutions</h1>
+                <p class="subtitle">SEO, GEO & AEO Deep Audit Breakdown</p>
+                <div class="hero-meta">
+                    <span class="hero-badge hero-badge-primary">🌐 https://apexdigitalsolutions.example.com</span>
+                    <span class="hero-badge">📊 FULL RUN</span>
+                    <span class="hero-badge">📅 May 17, 2026</span>
+                </div>
+            </div>
+            
+            <!-- Executive Statistics Ribbon -->
+            <div class="stats-ribbon">
+                <div class="stat-item">
+                    <div class="stat-val">4</div>
+                    <div class="stat-label">Pages Audited</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-val">38</div>
+                    <div class="stat-label">Images Processed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-val">12</div>
+                    <div class="stat-label">JSON-LD Schemas</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-val">8</div>
+                    <div class="stat-label">Outbound Citations</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-val">6</div>
+                    <div class="stat-label">Snippet Targets</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCORE METRICS GRID -->
+        <div class="score-grid">
+            <!-- SEO -->
+            <div class="score-card glass-card seo-card">
+                <h3>Traditional SEO</h3>
+                <div class="gauge-wrapper">
+                    <svg width="120" height="120" viewBox="0 0 100 100">
+                        <circle class="gauge-circle-bg" cx="50" cy="50" r="45"></circle>
+                        <circle class="gauge-circle seo-gauge" id="seo-ring" cx="50" cy="50" r="45"></circle>
+                    </svg>
+                    <div class="gauge-text" style="color: var(--accent-seo)">
+                        8
+                        <span class="gauge-subtext">/10</span>
+                    </div>
+                </div>
+                <span class="score-card-status status-badge-strong">
+                    Strong
+                </span>
+            </div>
+
+            <!-- GEO -->
+            <div class="score-card glass-card geo-card">
+                <h3>Generative AI (GEO)</h3>
+                <div class="gauge-wrapper">
+                    <svg width="120" height="120" viewBox="0 0 100 100">
+                        <circle class="gauge-circle-bg" cx="50" cy="50" r="45"></circle>
+                        <circle class="gauge-circle geo-gauge" id="geo-ring" cx="50" cy="50" r="45"></circle>
+                    </svg>
+                    <div class="gauge-text" style="color: var(--accent-geo)">
+                        5
+                        <span class="gauge-subtext">/10</span>
+                    </div>
+                </div>
+                <span class="score-card-status status-badge-ontrack">
+                    On Track
+                </span>
+            </div>
+
+            <!-- AEO -->
+            <div class="score-card glass-card aeo-card">
+                <h3>Answer Engine (AEO)</h3>
+                <div class="gauge-wrapper">
+                    <svg width="120" height="120" viewBox="0 0 100 100">
+                        <circle class="gauge-circle-bg" cx="50" cy="50" r="45"></circle>
+                        <circle class="gauge-circle aeo-gauge" id="aeo-ring" cx="50" cy="50" r="45"></circle>
+                    </svg>
+                    <div class="gauge-text" style="color: var(--accent-aeo)">
+                        6
+                        <span class="gauge-subtext">/10</span>
+                    </div>
+                </div>
+                <span class="score-card-status status-badge-ontrack">
+                    On Track
+                </span>
+            </div>
+        </div>
+
+        <!-- EXECUTIVE SUMMARY PANEL -->
+        <div class="glass-card summary-panel">
+            <h2>Executive Summary & Insights</h2>
+            <p>Apex Digital Solutions has established a highly optimized traditional SEO foundation with excellent keyword relevancy, mobile responsiveness, and solid on-page meta elements. However, the site is significantly missing out on the emerging AI Search landscape (GEO). There are no structured entity connections, author credentials, or dense factual claims that AI engines like Gemini or Perplexity prefer to cite. Additionally, Answer Engine Optimization (AEO) can be greatly enhanced with clear question-heading combinations and structured FAQ schema to capture featured snippets.</p>
+        </div>
+
+        <!-- INTERACTIVE RECOMMENDATIONS MATRIX & CHECKLIST -->
+        <div id="print-recs-page">
+            <h2 class="section-title">Priority Recommendations Matrix</h2>
+            
+            <!-- Action Checklist Tracker Widget -->
+            <div class="glass-card checklist-tracker-card">
+                <div class="tracker-header">
+                    <div class="tracker-title">
+                        <span>🚀 Dynamic Implementation Tracker</span>
+                    </div>
+                    <div class="tracker-stats" id="tracker-progress-text">
+                        0 of 5 Recommendations Completed (0%)
+                    </div>
+                </div>
+                <div class="tracker-bar-bg">
+                    <div class="tracker-bar-fill" id="tracker-progress-bar"></div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 8%; text-align: center;">Done</th>
+                            <th style="width: 14%">Priority</th>
+                            <th style="width: 53%">Issue & Operational Strategy</th>
+                            <th style="width: 9%; text-align: center;">Dimension</th>
+                            <th style="width: 8%; text-align: center;">Effort</th>
+                            <th style="width: 8%; text-align: center;">Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                            <tr class="recommendation-row" id="rec-row-0">
+                                <td style="text-align: center;" class="no-strike">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" class="task-checkbox" data-index="0" onchange="toggleTask(0)">
+                                        <span class="checkbox-checkmark"></span>
+                                    </label>
+                                </td>
+                                <td class="no-strike"><span class="priority-badge p-badge-critical">Critical</span></td>
+                                <td style="font-weight: 500">Deploy FAQ and HowTo schema on core service pages to unlock AEO rich snippets.</td>
+                                <td style="text-align: center;" class="no-strike"><strong>AEO</strong></td>
+                                <td style="text-align: center;" class="no-strike">Low</td>
+                                <td style="text-align: center; font-weight: 700; color: var(--accent-blue);" class="no-strike">High</td>
+                            </tr>
+                            
+                            <tr class="recommendation-row" id="rec-row-1">
+                                <td style="text-align: center;" class="no-strike">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" class="task-checkbox" data-index="1" onchange="toggleTask(1)">
+                                        <span class="checkbox-checkmark"></span>
+                                    </label>
+                                </td>
+                                <td class="no-strike"><span class="priority-badge p-badge-high">High</span></td>
+                                <td style="font-weight: 500">Build dedicated Author Profile pages with links to professional credentials (E-E-A-T).</td>
+                                <td style="text-align: center;" class="no-strike"><strong>GEO</strong></td>
+                                <td style="text-align: center;" class="no-strike">Medium</td>
+                                <td style="text-align: center; font-weight: 700; color: var(--accent-blue);" class="no-strike">High</td>
+                            </tr>
+                            
+                            <tr class="recommendation-row" id="rec-row-2">
+                                <td style="text-align: center;" class="no-strike">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" class="task-checkbox" data-index="2" onchange="toggleTask(2)">
+                                        <span class="checkbox-checkmark"></span>
+                                    </label>
+                                </td>
+                                <td class="no-strike"><span class="priority-badge p-badge-medium">Medium</span></td>
+                                <td style="font-weight: 500">Update Organisation Schema to link with SameAs fields and CEO entity graphs.</td>
+                                <td style="text-align: center;" class="no-strike"><strong>GEO</strong></td>
+                                <td style="text-align: center;" class="no-strike">Low</td>
+                                <td style="text-align: center; font-weight: 700; color: var(--accent-blue);" class="no-strike">Medium</td>
+                            </tr>
+                            
+                            <tr class="recommendation-row" id="rec-row-3">
+                                <td style="text-align: center;" class="no-strike">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" class="task-checkbox" data-index="3" onchange="toggleTask(3)">
+                                        <span class="checkbox-checkmark"></span>
+                                    </label>
+                                </td>
+                                <td class="no-strike"><span class="priority-badge p-badge-quickwin">Quick Win</span></td>
+                                <td style="font-weight: 500">Add optimized descriptive Alt Text to all service icons on the Homepage.</td>
+                                <td style="text-align: center;" class="no-strike"><strong>SEO</strong></td>
+                                <td style="text-align: center;" class="no-strike">Low</td>
+                                <td style="text-align: center; font-weight: 700; color: var(--accent-blue);" class="no-strike">Medium</td>
+                            </tr>
+                            
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- DETAILED OBSERVATIONS GRID -->
+        <h2 class="section-title">Granular Signal Breakthroughs</h2>
+        
+        <div class="filter-tabs-container">
+            <div class="filter-tabs">
+                <button class="filter-tab-btn active" id="tab-all" onclick="filterFindings('all')">All Signals</button>
+                <button class="filter-tab-btn" id="tab-good" onclick="filterFindings('good')">Good</button>
+                <button class="filter-tab-btn" id="tab-attention" onclick="filterFindings('needs attention')">Needs Attention</button>
+                <button class="filter-tab-btn" id="tab-missing" onclick="filterFindings('missing')">Missing</button>
+            </div>
+            <div style="font-size: 0.9rem; color: var(--text-muted); font-weight: 600;">
+                * Filter dynamically adjusts detailed lists below
+            </div>
+        </div>
+
+        <!-- SEO Breakdown -->
+        <div id="print-seo-page">
+            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; margin-top: 30px; color: var(--accent-seo); display: flex; align-items: center; gap: 10px;">
+                <span>🌐</span> 1. Traditional SEO Breakdowns
+            </h3>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%">Core Signal</th>
+                            <th style="width: 55%">Observations</th>
+                            <th style="width: 15%; text-align: center;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                            <tr class="finding-row" data-status="good">
+                                <td style="font-weight: 700">Title Tags & Meta Descriptions</td>
+                                <td>Homepage title (57 chars) and meta description (152 chars) are fully optimized.</td>
+                                <td style="text-align: center;"><span class="status-pill good">Good</span></td>
+                            </tr>
+                            
+                            <tr class="finding-row" data-status="good">
+                                <td style="font-weight: 700">Heading Hierarchy</td>
+                                <td>Logical H1 -> H2 structure on all crawled pages. No heading stuffing.</td>
+                                <td style="text-align: center;"><span class="status-pill good">Good</span></td>
+                            </tr>
+                            
+                            <tr class="finding-row" data-status="good">
+                                <td style="font-weight: 700">Mobile Optimization</td>
+                                <td>Viewport meta tag present and responsive breakpoints verified.</td>
+                                <td style="text-align: center;"><span class="status-pill good">Good</span></td>
+                            </tr>
+                            
+                            <tr class="finding-row" data-status="needs attention">
+                                <td style="font-weight: 700">Image Alt Tags</td>
+                                <td>Several core service icons on /services are missing alt text descriptions.</td>
+                                <td style="text-align: center;"><span class="status-pill needsattention">Needs Attention</span></td>
+                            </tr>
+                            
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- GEO & AEO Breakdowns -->
+        <div id="print-geo-aeo-page">
+            <!-- GEO Breakdown -->
+            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; margin-top: 40px; color: var(--accent-geo); display: flex; align-items: center; gap: 10px;">
+                <span>🧠</span> 2. Generative Engine (GEO) Breakdowns
+            </h3>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%">Core Signal</th>
+                            <th style="width: 55%">Observations</th>
+                            <th style="width: 15%; text-align: center;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                            <tr class="finding-row" data-status="missing">
+                                <td style="font-weight: 700">E-E-A-T Author Profiles</td>
+                                <td>No individual author profiles, credentials, or bio pages found.</td>
+                                <td style="text-align: center;"><span class="status-pill missing">Missing</span></td>
+                            </tr>
+                            
+                            <tr class="finding-row" data-status="needs attention">
+                                <td style="font-weight: 700">Organization Schema</td>
+                                <td>Basic schema exists but lacks SameAs social handles or CEO entity connections.</td>
+                                <td style="text-align: center;"><span class="status-pill needsattention">Needs Attention</span></td>
+                            </tr>
+                            
+                            <tr class="finding-row" data-status="needs attention">
+                                <td style="font-weight: 700">Factual Citations</td>
+                                <td>Case studies lack statistical tables and external authority citations.</td>
+                                <td style="text-align: center;"><span class="status-pill needsattention">Needs Attention</span></td>
+                            </tr>
+                            
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- AEO Breakdown -->
+            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; margin-top: 40px; color: var(--accent-aeo); display: flex; align-items: center; gap: 10px;">
+                <span>📢</span> 3. Answer Engine (AEO) Breakdowns
+            </h3>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%">Core Signal</th>
+                            <th style="width: 55%">Observations</th>
+                            <th style="width: 15%; text-align: center;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                            <tr class="finding-row" data-status="needs attention">
+                                <td style="font-weight: 700">Featured Snippet Eligibility</td>
+                                <td>Answers to key search terms are too lengthy (optimal: 40-60 words).</td>
+                                <td style="text-align: center;"><span class="status-pill needsattention">Needs Attention</span></td>
+                            </tr>
+                            
+                            <tr class="finding-row" data-status="missing">
+                                <td style="font-weight: 700">FAQ Schema</td>
+                                <td>No schema markup present for FAQ or HowTo steps.</td>
+                                <td style="text-align: center;"><span class="status-pill missing">Missing</span></td>
+                            </tr>
+                            
+                            <tr class="finding-row" data-status="needs attention">
+                                <td style="font-weight: 700">Conversational Phrasing</td>
+                                <td>Headings are too corporate (e.g. 'Our Services') instead of conversational.</td>
+                                <td style="text-align: center;"><span class="status-pill needsattention">Needs Attention</span></td>
+                            </tr>
+                            
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- CRAWL LOG -->
+        <h2 class="section-title">Crawled Path & Technical Logs</h2>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 25%">Audited Path</th>
+                        <th style="width: 20%">Classification</th>
+                        <th style="width: 55%">Audit Log & Technical Schema Signals</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                        <tr>
+                            <td style="font-family: 'Fira Code', monospace; font-size: 0.85rem; font-weight: 600; color: var(--accent-blue)">
+                                /
+                            </td>
+                            <td><strong style="color: var(--text-main)">Homepage</strong></td>
+                            <td style="font-size: 0.9rem; color: var(--text-muted);">Excellent layout, fast loading, singular H1, rich content.</td>
+                        </tr>
+                    
+                        <tr>
+                            <td style="font-family: 'Fira Code', monospace; font-size: 0.85rem; font-weight: 600; color: var(--accent-blue)">
+                                /about
+                            </td>
+                            <td><strong style="color: var(--text-main)">About Us</strong></td>
+                            <td style="font-size: 0.9rem; color: var(--text-muted);">Missing explicit author profiles and team schema.</td>
+                        </tr>
+                    
+                        <tr>
+                            <td style="font-family: 'Fira Code', monospace; font-size: 0.85rem; font-weight: 600; color: var(--accent-blue)">
+                                /services/cloud-migration
+                            </td>
+                            <td><strong style="color: var(--text-main)">Service Page</strong></td>
+                            <td style="font-size: 0.9rem; color: var(--text-muted);">Strong keyword signals but lacks conversational FAQ.</td>
+                        </tr>
+                    
+                        <tr>
+                            <td style="font-family: 'Fira Code', monospace; font-size: 0.85rem; font-weight: 600; color: var(--accent-blue)">
+                                /resources/blog
+                            </td>
+                            <td><strong style="color: var(--text-main)">Blog Hub</strong></td>
+                            <td style="font-size: 0.9rem; color: var(--text-muted);">No author bios or credentials on individual posts.</td>
+                        </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+
+        <!-- CORE STRENGTHS -->
+        <h2 class="section-title">Genuine Core Strengths</h2>
+        <div class="strengths-grid">
+            
+                <div class="strength-glass-card glass-card">
+                    <h4><span>⚡</span> Premium Typography & Layout</h4>
+                    <p>Visually stunning layout using Outfit and Inter Google Fonts.</p>
+                </div>
+            
+                <div class="strength-glass-card glass-card">
+                    <h4><span>⚡</span> Excellent Core Web Vitals</h4>
+                    <p>Fast loading times, minimal layout shifts, and perfect responsive sizing.</p>
+                </div>
+            
+        </div>
+    </div>
+
+    <!-- CLIENT SIDE INTERACTIVE SCRIPTS -->
+    <script>
+        // Theme Toggling Logic
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute("data-theme");
+            const newTheme = currentTheme === "dark" ? "light" : "dark";
+            html.setAttribute("data-theme", newTheme);
+            
+            const btnIcon = document.getElementById("theme-btn-icon");
+            const btnText = document.getElementById("theme-btn-text");
+            
+            if (newTheme === "light") {
+                btnIcon.textContent = "🌙";
+                btnText.textContent = "Dark Mode";
+                localStorage.setItem("seo-audit-theme", "light");
+            } else {
+                btnIcon.textContent = "☀️";
+                btnText.textContent = "Light Mode";
+                localStorage.setItem("seo-audit-theme", "dark");
+            }
+        }
+
+        // Load saved theme on boot
+        const savedTheme = localStorage.getItem("seo-audit-theme");
+        if (savedTheme) {
+            document.documentElement.setAttribute("data-theme", savedTheme);
+            const btnIcon = document.getElementById("theme-btn-icon");
+            const btnText = document.getElementById("theme-btn-text");
+            if (savedTheme === "light") {
+                btnIcon.textContent = "🌙";
+                btnText.textContent = "Dark Mode";
+            } else {
+                btnIcon.textContent = "☀️";
+                btnText.textContent = "Light Mode";
+            }
+        }
+
+        // Circular Gauge Animation Trigger
+        window.addEventListener("DOMContentLoaded", () => {
+            animateGauge("seo-ring", 8);
+            animateGauge("geo-ring", 5);
+            animateGauge("aeo-ring", 6);
+            loadChecklistState();
+        });
+
+        function animateGauge(ringId, score) {
+            const ring = document.getElementById(ringId);
+            if (!ring) return;
+            const radius = ring.r.baseVal.value;
+            const circumference = 2 * Math.PI * radius;
+            
+            // Calculate progress offset
+            const progress = score / 10;
+            const strokeDashoffset = circumference - (progress * circumference);
+            
+            // Apply dash properties statically first, then animate
+            ring.style.strokeDasharray = circumference;
+            ring.style.strokeDashoffset = circumference;
+            
+            // Delay slightly to trigger transition smoothly
+            setTimeout(() => {
+                ring.style.strokeDashoffset = strokeDashoffset;
+            }, 100);
+        }
+
+        // Tab Filter Logic
+        function filterFindings(status) {
+            // Update active state on tab buttons
+            const tabs = document.querySelectorAll(".filter-tab-btn");
+            tabs.forEach(t => t.classList.remove("active"));
+            
+            // Find matched tab
+            const activeId = "tab-" + (status === "all" ? "all" : status === "good" ? "good" : status === "needs attention" ? "attention" : "missing");
+            const activeTab = document.getElementById(activeId);
+            if (activeTab) activeTab.classList.add("active");
+
+            // Filter finding rows
+            const rows = document.querySelectorAll(".finding-row");
+            rows.forEach(row => {
+                const rowStatus = row.getAttribute("data-status");
+                if (status === "all" || rowStatus === status) {
+                    row.classList.remove("table-row-hidden");
+                } else {
+                    row.classList.add("table-row-hidden");
+                }
+            });
+        }
+
+        // Checklist State and LocalStorage persistence
+        const siteKey = "seo-audit-checklist-apex digital solutions";
+
+        function toggleTask(index) {
+            const checkbox = document.querySelector('input.task-checkbox[data-index="' + index + '"]');
+            const row = document.getElementById("rec-row-" + index);
+            
+            if (checkbox && row) {
+                if (checkbox.checked) {
+                    row.classList.add("completed-row");
+                } else {
+                    row.classList.remove("completed-row");
+                }
+            }
+            
+            saveChecklistState();
+            updateTrackerProgress();
+        }
+
+        function saveChecklistState() {
+            const checkboxes = document.querySelectorAll("input.task-checkbox");
+            const checkedStates = [];
+            checkboxes.forEach(c => {
+                checkedStates.push({
+                    index: c.getAttribute("data-index"),
+                    checked: c.checked
+                });
+            });
+            localStorage.setItem(siteKey, JSON.stringify(checkedStates));
+        }
+
+        function loadChecklistState() {
+            const savedState = localStorage.getItem(siteKey);
+            if (savedState) {
+                try {
+                    const checkedStates = JSON.parse(savedState);
+                    checkedStates.forEach(item => {
+                        const checkbox = document.querySelector('input.task-checkbox[data-index="' + item.index + '"]');
+                        if (checkbox) {
+                            checkbox.checked = item.checked;
+                            toggleTask(item.index);
+                        }
+                    });
+                } catch(e) {}
+            }
+            updateTrackerProgress();
+        }
+
+        function updateTrackerProgress() {
+            const checkboxes = document.querySelectorAll("input.task-checkbox");
+            const total = checkboxes.length;
+            if (total === 0) return;
+
+            let completed = 0;
+            checkboxes.forEach(c => {
+                if (c.checked) completed++;
+            });
+
+            const percent = Math.round((completed / total) * 100);
+            
+            const progressBar = document.getElementById("tracker-progress-bar");
+            const progressText = document.getElementById("tracker-progress-text");
+            
+            if (progressBar) progressBar.style.width = percent + "%";
+            if (progressText) {
+                progressText.textContent = completed + " of " + total + " Recommendations Completed (" + percent + "%)";
+            }
+        }
+    </script>
+</body>
+</html>
+  

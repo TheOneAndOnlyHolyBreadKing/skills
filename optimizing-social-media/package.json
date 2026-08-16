@@ -1,0 +1,16 @@
+{
+  "name": "optimizing-social-media",
+  "version": "1.0.0",
+  "description": "Premium Social Media Hook, Script, and Ad Optimizer for Facebook and Tech Talk",
+  "main": "scripts/post_optimizer.ts",
+  "scripts": {
+    "optimize": "npx tsx scripts/post_optimizer.ts"
+  },
+  "dependencies": {
+    "@types/node": "^20.11.0",
+    "axios": "^1.6.0",
+    "cheerio": "^1.2.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+}

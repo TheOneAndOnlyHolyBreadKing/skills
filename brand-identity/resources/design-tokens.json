@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "brand_name": "Micro Rocket IT",
+    "description": "Core design tokens for Micro Rocket IT, a premium IT and tech services brand."
+  },
+  "colors": {
+    "primary": {
+      "DEFAULT": "#D4AF37",
+      "foreground": "#000000"
+    },
+    "secondary": {
+      "DEFAULT": "#171717",
+      "foreground": "#F8FAFC"
+    },
+    "background": "#050505",
+    "foreground": "#F8FAFC",
+    "muted": "#262626",
+    "accent": "#F59E0B",
+    "destructive": "#EF4444",
+    "success": "#10B981",
+    "link": "#D4AF37"
+  },
+  "typography": {
+    "font_family_headings": ["Outfit", "sans-serif"],
+    "font_family_body": ["Inter", "sans-serif"],
+    "h1": "48px",
+    "h2": "36px",
+    "body": "16px",
+    "font_weight_bold": "700",
+    "font_weight_normal": "400"
+  },
+  "ui": {
+    "border_radius_default": "8px",
+    "border_radius_small": "4px",
+    "spacing_base_unit": "8px"
+  }
+}
