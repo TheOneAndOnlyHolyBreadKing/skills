@@ -1,2 +1,0 @@
-[console_scripts]
-tradingview-mcp = tradingview_mcp.server:main
